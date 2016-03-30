@@ -4,7 +4,6 @@ import java.util.Properties;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp2.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -27,9 +27,10 @@ public class AppConfig {
 	   private Environment env;
 	   
 	   @Bean
-	   public LocalSessionFactoryBean sessionFactory() {
+	   public LocalSessionFactoryBean sessionFactory()  {
 	      LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
 	      sessionFactory.setDataSource(restDataSource());
+              
 	      sessionFactory.setHibernateProperties(hibernateProperties());
 	      sessionFactory.setPackagesToScan("sg.edu.ntu.hrms.dto");
 	      return sessionFactory;
@@ -37,13 +38,19 @@ public class AppConfig {
 	 
 	   @Bean
 	   public DataSource restDataSource() {
-	      BasicDataSource dataSource = new BasicDataSource();
+	      //BasicDataSource dataSource = new BasicDataSource();
+              final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
+              dsLookup.setResourceRef(true);
+              DataSource dataSource = dsLookup.getDataSource("jdbc/CI6225");
+              return dataSource;              
+              //jndi.afterPropertiesSet();
+              /*
 	      dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
 	      dataSource.setUrl(env.getProperty("jdbc.url"));
 	      dataSource.setUsername(env.getProperty("jdbc.user"));
 	      dataSource.setPassword(env.getProperty("jdbc.pass"));
-	 
-	      return dataSource;
+	      */
+              //jndi.
 	   }
 	 
 	   @Bean
@@ -65,6 +72,7 @@ public class AppConfig {
 	      return new Properties() {
 	         {
 	           // setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+                     //setProperty("connection.datasource","jdbc/hrms");
 	            setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
 	           // setProperty("hibernate.globally_quoted_identifiers", "true");
 		        setProperty("hibernate.format_sql", "true");
