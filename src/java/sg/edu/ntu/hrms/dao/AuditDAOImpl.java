@@ -9,7 +9,8 @@ import java.util.Date;
 import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import sg.edu.ntu.hrms.dto.AuditDTO;
 import sg.edu.ntu.hrms.dto.UserDTO;
 
@@ -17,51 +18,34 @@ import sg.edu.ntu.hrms.dto.UserDTO;
  *
  * @author michael-PC
  */
+@Repository
 public class AuditDAOImpl extends BaseDAOImpl implements AuditDAO {
 
     @Override
-    public void log(String descr, UserDTO author) {
+    @Transactional
+    public void log(String descr, UserDTO author) throws Exception{
         
         AuditDTO audit = create(descr,author);
         java.util.Date current = new java.util.Date();
         audit.setCreated(current);
         audit.setModified(current);
         Session session = null;
-        Transaction txn = null;
-        try
-        {
-            session = sessionFactory.getCurrentSession();
-            txn = session.beginTransaction();
-            session.persist(audit);
-            txn.commit(); 
-
-        }
-        catch (Exception ex)
-        {
-            txn.rollback();
-            ex.printStackTrace();
-        }
+        session = getSession();
+        session.persist(audit);
     }
 
     @Override
-    public List<AuditDTO> getAuditLog(Date from, Date to) {
+    @Transactional
+    public List<AuditDTO> getAuditLog(Date from, Date to) throws Exception {
         List<AuditDTO> results = null;
-        String hql = "FROM com.sapuraglobal.hrms.dto.AuditDTO U left join fetch U.login WHERE U.created BETWEEN :stDate "
+        String hql = "FROM sg.edu.ntu.hrms.dto.AuditDTO U left join fetch U.login WHERE U.created BETWEEN :stDate "
                 +    "AND :edDate";
         Session session = null;
-        try
-        {
-            session = sessionFactory.getCurrentSession();
-            Query query = session.createQuery(hql);
-            query.setParameter("stDate", from);
-            query.setParameter("edDate", to);
-
-            results = query.list();
-        }
-        catch(Exception ex)
-        {
-            ex.printStackTrace();
-        }
+        session = getSession();
+        Query query = session.createQuery(hql);
+        query.setParameter("stDate", from);
+        query.setParameter("edDate", to);
+        results = query.list();
         return results;
     }
     

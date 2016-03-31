@@ -2,7 +2,7 @@ package sg.edu.ntu.hrms.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sg.edu.ntu.hrms.dao.AccessDAO;
@@ -12,7 +12,7 @@ import sg.edu.ntu.hrms.dto.AccessDTO;
 import sg.edu.ntu.hrms.dto.UserDTO;
 
 @Service("loginService")
-public class LoginService {
+public class LoginService extends BaseService {
     @Autowired
     private UserDAO userDAO;
     
@@ -32,37 +32,52 @@ public class LoginService {
 	public UserDTO authenticate(String loginName, String password){
             //userDAO = new UserDAOImpl();
             UserDTO auth = null;
+            System.out.println("sessionFactory: "+sessionFactory);
+            Session session = sessionFactory.getCurrentSession();
+            session.beginTransaction();
             
-            if(userDAO!=null){
-                auth = userDAO.getUser(loginName);
-            }
-            if(auth!=null&&!password.equals(auth.getPassword()))
+            try
             {
-                auth=null;
-            }
-            else if(auth!=null&&password.equals(auth.getPassword()))
-            {
-                
-                //List<AccessDTO> list = accessDAO.getAccessRights(auth.getRole().getRole().getId());
-                //setAccessRights(convertToACRMap(list));
-                // session.setAttribute("access", convertToACRMap(list));
-                //determine manager
-                UserDTO mgr = userDAO.getUserFromId(auth.getApprover());
-                if(mgr!=null)
-                {
-                    auth.setApproverEmail(mgr.getEmail());
-                    auth.setApproverName(mgr.getName());
+                if(userDAO!=null){
+                    userDAO.setSession(session);
+                    auth = userDAO.getUser(loginName);
                 }
-                List<UserDTO> resultList = userDAO.getReporteeList(auth.getId());
-                //System.out.println("auth id: "+auth.getId());
-                if(resultList!=null&&resultList.size()>0)
+                if(auth!=null&&!password.equals(auth.getPassword()))
                 {
-                   System.out.println("isMgr");
-                   auth.setIsManager(true);
+                    auth=null;
                 }
-                List<AccessDTO> list = accessDAO.getAccessRights(auth.getRole().getRole().getId());
-                setAccessRights(convertToACRMap(list));
+                else if(auth!=null&&password.equals(auth.getPassword()))
+                {
 
+                    //List<AccessDTO> list = accessDAO.getAccessRights(auth.getRole().getRole().getId());
+                    //setAccessRights(convertToACRMap(list));
+                    // session.setAttribute("access", convertToACRMap(list));
+                    //determine manager
+                    UserDTO mgr = userDAO.getUserFromId(auth.getApprover());
+                    if(mgr!=null)
+                    {
+                        auth.setApproverEmail(mgr.getEmail());
+                        auth.setApproverName(mgr.getName());
+                    }
+                    List<UserDTO> resultList = userDAO.getReporteeList(auth.getId());
+                    //System.out.println("auth id: "+auth.getId());
+                    if(resultList!=null&&resultList.size()>0)
+                    {
+                       System.out.println("isMgr");
+                       auth.setIsManager(true);
+                    }
+                    accessDAO.setSession(session);
+                    List<AccessDTO> list = accessDAO.getAccessRights(auth.getRole().getRole().getId());
+                    setAccessRights(convertToACRMap(list));
+
+                }
+            }catch(Exception ex)
+            {
+                ex.printStackTrace();
+            }
+            finally
+            {
+                session.close();
             }
             return auth;
 	}

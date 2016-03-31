@@ -13,5 +13,5 @@ import sg.edu.ntu.hrms.dto.ModuleDTO;
  * @author michael-PC
  */
 public interface ModuleDAO extends BaseDAO {
-        List<ModuleDTO> getAllModules();
+        List<ModuleDTO> getAllModules() throws Exception;
 }

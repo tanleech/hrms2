@@ -7,27 +7,24 @@ package sg.edu.ntu.hrms.dao;
 
 import java.util.List;
 import org.hibernate.Session;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import sg.edu.ntu.hrms.dto.ModuleDTO;
 
 /**
  *
  * @author michael-PC
  */
+@Repository
 public class ModuleDAOImpl extends BaseDAOImpl implements ModuleDAO{
 
     @Override
-    public List<ModuleDTO> getAllModules() {
+    @Transactional
+    public List<ModuleDTO> getAllModules() throws Exception{
         List results=null;
         Session session=null;
-        try
-        {
-            session = sessionFactory.getCurrentSession();
-            results =  session.createQuery("SELECT DISTINCT module FROM com.sapuraglobal.hrms.dto.ModuleDTO module left join fetch module.accessList").list();
-        }
-        catch(Exception ex)
-        {
-            ex.printStackTrace();
-        }
+        session = getSession();
+        results =  session.createQuery("SELECT DISTINCT module FROM sg.edu.ntu.hrms.dto.ModuleDTO module left join fetch module.accessList").list();
         return results;
     }
     

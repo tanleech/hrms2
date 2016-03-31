@@ -14,13 +14,13 @@ import sg.edu.ntu.hrms.dto.TitleDTO;
  */
 public interface TitleDAO extends BaseDAO{
     
-    List<TitleDTO> getAllTitles();
+    List<TitleDTO> getAllTitles() throws Exception;
 
-    void addTitle(TitleDTO title);
+    void addTitle(TitleDTO title) throws Exception;
 
-    TitleDTO getTitle(int id);
+    TitleDTO getTitle(int id) throws Exception;
 
-    TitleDTO getTitleByName(String descr);
+    TitleDTO getTitleByName(String descr) throws Exception;
 
     
 }

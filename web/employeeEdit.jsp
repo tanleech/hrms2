@@ -86,11 +86,12 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
+            ${requestScope.action}
             <h1>
-                <c:if test="${param.action eq 'U'}">
+                <c:if test="${requestScope.action eq 'U'}">
                     Employee Details
                 </c:if>
-                <c:if test="${param.action ne 'U'}">
+                <c:if test="${requestScope.action ne 'U'}">
                     Add Employee
                 </c:if>    
                 <button type="button" class="btn btn-primary pull-right" id="saveBtn">Save</button>
@@ -98,7 +99,12 @@
         </div>
         <br/>
         <!-- Main content -->
-                 <form action="employeeEdit" method="post" id="myForm" class="form-horizontal">
+                <c:if test="${requestScope.action eq 'U'}">
+                     <form action="employeeEdit" method="post" id="myForm" class="form-horizontal">
+                </c:if>
+                <c:if test="${requestScope.action ne 'U'}">
+                     <form action="employeeAdd" method="post" id="myForm" class="form-horizontal">
+                </c:if>            
      <div class="box-body">
          <c:if test="${param.action eq 'U'}">
                     <input type="hidden" value="E" id="action" name="action"/>

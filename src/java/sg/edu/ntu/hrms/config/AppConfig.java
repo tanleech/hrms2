@@ -76,6 +76,7 @@ public class AppConfig {
 	            setProperty("hibernate.dialect","org.hibernate.dialect.MySQLDialect");
 	           // setProperty("hibernate.globally_quoted_identifiers", "true");
 		        setProperty("hibernate.format_sql", "true");
+                    setProperty("hibernate.current_session_context_class","thread");
 	         }
 	      };
 	   }

@@ -23,6 +23,11 @@
         <action name="employeeEdit" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction">
             <result name="success" type="redirectAction">/employee</result>
         </action>
+        <action name="employeeAdd" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="addEmp">
+            <result name="input">/employeeEdit.jsp</result>
+            <result name="success" type="redirectAction">/employee</result>
+        </action>
+        
         
     </package>
 </struts>

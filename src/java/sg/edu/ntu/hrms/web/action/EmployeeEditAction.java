@@ -5,6 +5,10 @@
  */
 package sg.edu.ntu.hrms.web.action;
 
+import java.util.List;
+import sg.edu.ntu.hrms.dto.DeptDTO;
+import sg.edu.ntu.hrms.service.EmployeeEditService;
+
 /**
  *
  * @author michael-PC
@@ -20,6 +24,25 @@ public class EmployeeEditAction extends BaseAction{
     private String probDue;
     private String base;
     private String max;
+    private String action;
+    private List<DeptDTO>deptList;
+
+    public List<DeptDTO> getDeptList() {
+        return deptList;
+    }
+
+    public void setDeptList(List<DeptDTO> deptList) {
+        this.deptList = deptList;
+    }
+
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
+    }
 
     public String getName() {
         return name;
@@ -97,6 +120,24 @@ public class EmployeeEditAction extends BaseAction{
     {
         System.out.println("name: "+name);
         return SUCCESS;
+    }
+    
+    public String addEmp()
+    {   
+        String result="";
+        if(action==null||action.isEmpty())
+        {
+            action = "A";
+            EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
+            setDeptList(svc.getAllDepts());
+            result = INPUT;
+        }
+        else if(action.equals("A"))
+        {
+            System.out.println("Add");
+            result = SUCCESS;
+        }
+        return result;
     }
     
 }

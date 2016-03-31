@@ -15,13 +15,13 @@ import sg.edu.ntu.hrms.dto.RoleDTO;
  */
 public interface AccessDAO extends BaseDAO{
     
-    List<RoleDTO> getAllRoles();
+    List<RoleDTO> getAllRoles() throws Exception;
 
-    void addRole(RoleDTO roleDTO);
+    void addRole(RoleDTO roleDTO) throws Exception;
 
-    RoleDTO getRole(String descr);
+    RoleDTO getRole(String descr) throws Exception;
 
-    void update(int roleId, List<AccessDTO>accessList);
+    void update(int roleId, List<AccessDTO>accessList) throws Exception;
 
-    List<AccessDTO> getAccessRights(int roleId);
+    List<AccessDTO> getAccessRights(int roleId) throws Exception;
 }

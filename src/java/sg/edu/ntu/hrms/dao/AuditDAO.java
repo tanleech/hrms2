@@ -15,7 +15,7 @@ import sg.edu.ntu.hrms.dto.UserDTO;
  * @author michael-PC
  */
 public interface AuditDAO extends BaseDAO{
-    void log(String descr,UserDTO author);
+    void log(String descr,UserDTO author) throws Exception;
 
-    List<AuditDTO> getAuditLog(Date from, Date to);
+    List<AuditDTO> getAuditLog(Date from, Date to) throws Exception;
 }

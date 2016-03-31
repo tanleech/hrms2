@@ -16,24 +16,24 @@ import sg.edu.ntu.hrms.dto.UserDeptDTO;
  */
 public interface DeptDAO extends BaseDAO{
     
-    List<DeptDTO> getAllDepts();
+    List<DeptDTO> getAllDepts() throws Exception;
 
-    void addDept(DeptDTO deptDTO);
+    void addDept(DeptDTO deptDTO) throws Exception;
 
-    DeptDTO getDepartment(String deptDescr);
+    DeptDTO getDepartment(String deptDescr) throws Exception;
 
-    UserDeptDTO getUserDept(int userId, int deptId);
+    UserDeptDTO getUserDept(int userId, int deptId) throws Exception;
 
-    void unassignManager(int deptId);
+    void unassignManager(int deptId) throws Exception;
 
-    void assignEmployee(UserDTO userDTO, DeptDTO deptDTO); 
+    void assignEmployee(UserDTO userDTO, DeptDTO deptDTO) throws Exception; 
 
-    void unassignEmployee(int userId, int deptId);
+    void unassignEmployee(int userId, int deptId) throws Exception;
 
-    int assignManager(int userId, int deptId);
+    int assignManager(int userId, int deptId) throws Exception;
 
-    int updateEmployee(int userId, int deptId);
+    int updateEmployee(int userId, int deptId) throws Exception;
 
-    int updateDept(String oldName, String newName);
+    int updateDept(String oldName, String newName) throws Exception;
     
 }

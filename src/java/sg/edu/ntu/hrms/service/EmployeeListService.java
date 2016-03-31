@@ -5,7 +5,6 @@
  */
 package sg.edu.ntu.hrms.service;
 
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,7 +14,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
-import javax.servlet.RequestDispatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -66,7 +64,7 @@ public class EmployeeListService {
             out.flush();
             */
             return json;
-  	  } catch (ParseException e) {
+  	  } catch (Exception  e) {
 		e.printStackTrace();
                 return null;
 	  }
