@@ -5,6 +5,7 @@
 <struts>
     <include file="emp.xml"/>
     <include file="leave.xml"/>
+      <include file="dept.xml"/>
     <!-- Configuration for the default package. -->
     <package name="default" extends="struts-default">
     </package>

@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.DeptDTO" %>
+<%@ page import="sg.edu.ntu.hrms.dto.DeptDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -54,7 +54,7 @@
         </div>
         <br/>
         <!-- Main content -->
-                 <form action="addDept" method="post" id="myForm" class="form-horizontal">
+                 <form action="updateDept" method="post" id="myForm" class="form-horizontal">
                   <span class="content form-control">
                         <c:if test="${not empty requestScope.error}">
                           <div class="alert alert-danger">
@@ -67,7 +67,7 @@
                      <div class="col-sm-3" id="nameContainer">
                         <input type="hidden" value="" name="action" id="action"/> 
                         <input type="hidden" value="${param.dept}" name="oldName" id="oldName"/> 
-                        <input type="text" class="form-control" name="name" id="name" value="${param.dept}"/>   
+                        <input type="text" class="form-control" name="dept" id="name" value="${param.dept}"/>   
                      </div>
                     </div>
                   </span> 

@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.DeptDTO" %>
+<%@ page import="sg.edu.ntu.hrms.dto.DeptDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -19,7 +19,7 @@
          $(document).ready(function () {
              $('#addBtn').click(function ()
              {
-                window.location.href = 'deptEdit?action=A&dept='+$('#department').val();
+                window.location.href = 'getAssignEmp?action=A&dept='+$('#department').val();
              }      
              );
              $('#mgr').change(function ()
@@ -60,12 +60,7 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <h1>
-                <c:if test="${param.action eq 'U'}">
-                    Update Department
-                </c:if>
-                <c:if test="${param.action ne 'U'}">
-                    Add Department
-                </c:if>    
+                Department
                 <button type="button" class="btn btn-primary pull-right" id="addBtn">Add</button>
             </h1>    
         </div>
@@ -73,7 +68,7 @@
         <!-- Main content -->
                <div class="box-body">
  
-                  <form action="deptEdit" method="post" id="myForm" class="form-horizontal">
+                  <form action="assignMgr" method="post" id="myForm" class="form-horizontal">
                     <input type="hidden" value="" id="action" name="action"/>
                     <span class="content form-control" id="panel" style="height: 100%">
                     <div class="form-group">
@@ -91,7 +86,7 @@
                             <c:choose>
                                 <c:when test="${!empty requestScope.usrList}">
                                     <c:forEach var="entry" items="${requestScope.usrList}">
-                                        <option value="<c:out value="${entry.login}"/>" ${requestScope.manager.user.name == entry.name ? 'selected' : ''}><c:out value="${entry.name}"/></option>
+                                        <option value="<c:out value="${entry.login}"/>" ${requestScope.userDept.user.name == entry.name ? 'selected' : ''}><c:out value="${entry.name}"/></option>
                                     </c:forEach>
                                 </c:when>
                             </c:choose>
@@ -111,7 +106,7 @@
                                ${emp.user.name}
                             </td>
                             <td class="pull-right">
-                               <a href="deptEdit?action=D&userId=${emp.user.id}&dept=${requestScope.dept}"  class="del" id="delBtn">
+                               <a href="UnAssignEmp?action=D&userId=${emp.user.id}&dept=${requestScope.dept}"  class="del" id="delBtn">
                                  <span class="glyphicon glyphicon-remove"/>
                                </a>
                             </td>

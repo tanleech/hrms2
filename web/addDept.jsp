@@ -7,7 +7,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" language="java"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.DeptDTO" %>
+<%@ page import="sg.edu.ntu.hrms.dto.DeptDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -48,10 +48,10 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <h1>
-                <c:if test="${action ne 'U' }">
+                <c:if test="${requestScope.action ne 'U' }">
                      Add Department
                 </c:if>
-                <c:if test="${action eq 'U' }">
+                <c:if test="${requestScope.action eq 'U' }">
                      Update Department
                 </c:if>               
                 <button type="button" class="btn btn-primary pull-right" id="saveBtn">Save</button>
@@ -71,7 +71,7 @@
                      <label class=" control-label col-sm-1">Name</label>
                      <div class="col-sm-3" id="nameContainer">
                         <input type="hidden" value="${param.action}" />
-                        <input type="text" class="form-control" name="name" id="name"/>   
+                        <input type="text" class="form-control" name="dept" id="name"/>   
                      </div>
                     </div>
                   </span> 

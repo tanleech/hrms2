@@ -39,7 +39,7 @@ public class DeptDTO implements java.io.Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date modified;
     
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.MERGE)
     @JoinColumn(name="Dept_id")
     private List<UserDeptDTO> employees;
     

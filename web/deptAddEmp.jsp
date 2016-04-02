@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.DeptDTO" %>
+<%@ page import="sg.edu.ntu.hrms.dto.DeptDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -70,7 +70,7 @@
                           ${requestScope.error}
                       </div>
                   </c:if>  
-                  <form action="deptEdit" method="post" id="myForm" class="form-horizontal">
+                  <form action="deptAssignEmp" method="post" id="myForm" class="form-horizontal">
                     <input type="hidden" value="" id="action" name="action"/>
                     <input type="hidden" value="${requestScope.dept}" id="dept" name="dept"/>
                     <span class="content form-control" id="panel" style="height: 100%">
