@@ -51,6 +51,8 @@ public class EmployeeEditAction extends BaseAction{
     private LeaveEntDTO entAnnual;
     
     private String id;
+    
+    private EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
 
     public String getId() {
         return id;
@@ -254,7 +256,7 @@ public class EmployeeEditAction extends BaseAction{
         if(action==null||action.isEmpty())
         {
             action = "A";
-            EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
+            //EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
             populateDropDown(svc);
             result = INPUT;
         }
@@ -262,7 +264,7 @@ public class EmployeeEditAction extends BaseAction{
         {
             System.out.println("Add");
             UserDTO emp = prepare();
-            EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
+            //EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
             try
             {
                 svc.addEmployee(emp);
@@ -294,7 +296,7 @@ public class EmployeeEditAction extends BaseAction{
         if(action==null||action.isEmpty())
         {
                 //retrieve the user
-                EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
+                //EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
                 UserDTO user = svc.getUser(login);
                 setUser(user);
                 populateDropDown(svc);
@@ -306,7 +308,7 @@ public class EmployeeEditAction extends BaseAction{
         else if(action.equals("U"))
         {
             UserDTO emp = prepare();
-            EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
+            //EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
             emp.setId(Integer.parseInt(id));
             svc.updateEmployee(emp);
             result = SUCCESS;
