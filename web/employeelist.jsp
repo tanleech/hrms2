@@ -79,7 +79,7 @@
          $(document).ready(function () {
              $('#Add').click(function ()
              {
-                window.location.href="employeeEdit"; 
+                window.location.href="employeeAdd"; 
              }      
              );
              $('#daterange').daterangepicker();

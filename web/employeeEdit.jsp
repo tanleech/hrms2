@@ -84,7 +84,6 @@
       <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <div class="content-header">
-            ${requestScope.action}
             <h1>
                 <c:if test="${requestScope.action eq 'U'}">
                     Employee Details
