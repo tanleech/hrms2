@@ -212,6 +212,12 @@
                          <input type="text" class="form-control" name="login" id="login"
                                 value="${requestScope.user.login}"/>   
                      </div>
+                     <label class=" control-label col-sm-2">*Password</label>
+                     <div class="col-sm-3">
+                         <input type="text" class="form-control" name="password" id="password"
+                                value="${requestScope.user.password}"/>   
+                     </div>
+                     
                     </div>
                       
                     <div class="form-group">
@@ -242,7 +248,7 @@
                                value="${requestScope.entAnnual.max}"/>   
                      </div>
                     </div> 
-                    <c:if test="${param.action eq 'U'}">
+                    <c:if test="${requestScope.action eq 'U'}">
                                    
                     <div class="form-group">
                            <label class=" control-label col-sm-1">Leave Balance</label>
@@ -276,9 +282,9 @@
                      </div>
                     </div> 
                     -->
-                  <c:if test="${param.action eq 'U'}">
+                  <c:if test="${requestScope.action eq 'U'}">
   
-                   <a href ='leaveEnt?action=U&id=${requestScope.user.login}' ><button type="button" class="btn btn-primary pull-right" id="nextBtn">Edit Leave Entitlement</button></a>
+                   <a href ='leaveEnt?action=U&login=${requestScope.user.login}' ><button type="button" class="btn btn-primary pull-right" id="nextBtn">Edit Leave Entitlement</button></a>
                   </c:if>
                   </span> 
                         </div>  

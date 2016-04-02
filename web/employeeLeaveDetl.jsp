@@ -54,8 +54,8 @@
         <!-- Content Header (Page header) -->
         <div class="content-header">
             <h1>
-                 Employee Leave Details
-                 <a href="leaveEnt?action=A&id=${requestScope.user.login}"> <button type="button" class="btn btn-primary pull-right" id="addBtn">Add</button>
+                 Employee Leave Details for ${requestScope.user.name}
+                 <a href="leaveEntAdd?action=A&login=${requestScope.user.login}"> <button type="button" class="btn btn-primary pull-right" id="addBtn">Add</button>
                  </a>
             </h1>    
         </div>
@@ -70,7 +70,7 @@
                            <div class="form-group">
                            <label class=" control-label col-sm-1">Annual Accrued</label>
                            <div class="col-sm-3">
-                              <fmt:formatNumber type="number" maxFractionDigits="1" value="${requestScope.accured}" var="accrued"/>
+                              <fmt:formatNumber type="number" maxFractionDigits="1" value="${requestScope.annualAccrued}" var="accrued"/>
                               <input type="text" class="form-control" name="annualAccrued"
                                      value="${accrued}" readonly/>   
                            </div>
@@ -91,11 +91,6 @@
                            <div class="col-sm-3">
                               <input type="text" class="form-control" name="computedCF" id="computedCF"
                                      value="${requestScope.entAnnual.carriedOver}"readonly/>   
-                           </div>
-                           <div class="form-group">
-                               <div class="col-sm-1">
-                                   <button type="button" class="btn btn-primary pull-left" id="saveBtn">Update</button>
-                               </div>
                            </div>
                           </div>
                 <table id="entTab" class="table table-bordered table-hover">
@@ -120,7 +115,7 @@
                                                 ${entry.current}
                                             </td>
                                             <td>
-                                              <a href="leaveEntAdd?action=D&entId=${entry.id}&userId=${requestScope.user.id}&loginId=${requestScope.user.login}"  class="del" id="delBtn">
+                                              <a href="leaveEntUnassign?action=D&entId=${entry.id}&userId=${requestScope.user.id}&login=${requestScope.user.login}"  class="del" id="delBtn">
                                                 <span class="glyphicon glyphicon-remove"/>
                                               </a>
                                             </td>

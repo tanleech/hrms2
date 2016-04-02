@@ -25,7 +25,7 @@
              $('#leaveType').change(function ()
              {
                  var type = $('#leaveType').val();
-                $.get("leaveEntAdd?action=T&typeId="+type, function(data, status){
+                $.get("leaveEntJson?action=T&typeId="+type, function(data, status){
                         //alert("Data: " + data + "\nStatus: " + status);
                         //alert(data);
                         $('#days').val(data);
@@ -57,7 +57,7 @@
         <br/>
         <!-- Main content -->
                <div class="box-body">
-                  <form action="leaveEntAdd" method="post" id="myForm" class="form-horizontal">
+                  <form action="leaveEntAssign" method="post" id="myForm" class="form-horizontal">
                     <input type="hidden" value="" id="action" name="action"/>
                     <input type="hidden" value="${requestScope.user.login}" id="login" name="login" />
                     <span class="content form-control" id="panel" style="height: 100%">
@@ -67,7 +67,7 @@
                     <div class="form-group">  
                      <label class=" control-label col-sm-1">Leave Entitlement</label>
                      <div class="col-sm-3">
-                        <select class="form-control" id="leaveType" name="leaveType">
+                        <select class="form-control" id="leaveType" name="typeId">
                             <option value="0">
                                 None
                             </option>    
@@ -83,14 +83,16 @@
                     <div class="form-group">  
                      <label class=" control-label col-sm-1">No of days</label>
                      <div class="col-sm-3">
-                         <input value="" id="days" name="days"/>
+                         <input id="days" name="days"/>
                      </div>
                      
                     </div>
-                    </span> 
-                 </form>
             <!-- Main content -->
                </div>
+               </span> 
+                    
+              </form>
+
       </div>
       <%@include file="footer.jsp" %>
   </body>      

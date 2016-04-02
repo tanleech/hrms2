@@ -52,8 +52,20 @@ public class EmployeeEditAction extends BaseAction{
     
     private String id;
     
+    private String password;
+    
     private EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    
+    
     public String getId() {
         return id;
     }
@@ -327,6 +339,7 @@ public class EmployeeEditAction extends BaseAction{
         user.setPhone(mobile);
         user.setOffice(office);
         user.setLogin(login);
+        user.setPassword(password);
         /*
         user.setMax(Double.parseDouble(max));
         user.setBase(Double.parseDouble(base));
