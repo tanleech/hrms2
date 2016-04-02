@@ -5,7 +5,6 @@
  */
 package sg.edu.ntu.hrms.service;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,6 +13,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 import javax.json.Json;
 import javax.json.JsonArrayBuilder;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +25,7 @@ import sg.edu.ntu.hrms.dto.UserDTO;
  * @author michael-PC
  */
 @Service("employeeService")
-public class EmployeeListService {
+public class EmployeeListService extends BaseService {
     @Autowired
     private UserDAO userDAO;
     
@@ -49,6 +49,9 @@ public class EmployeeListService {
         StringTokenizer st = new StringTokenizer(dtRange,"-");
         String stDate = st.nextToken().trim();
         String edDate = st.nextToken().trim();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        userDAO.setSession(session);
 	try {
 
 	    Date fromDate = formatter.parse(stDate);

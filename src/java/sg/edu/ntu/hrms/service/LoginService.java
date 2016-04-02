@@ -33,7 +33,7 @@ public class LoginService extends BaseService {
             //userDAO = new UserDAOImpl();
             UserDTO auth = null;
             System.out.println("sessionFactory: "+sessionFactory);
-            Session session = sessionFactory.getCurrentSession();
+            Session session = sessionFactory.openSession();
             session.beginTransaction();
             
             try

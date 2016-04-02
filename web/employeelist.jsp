@@ -45,7 +45,7 @@
 
                     for(i = 0; i < arr.length; i++) {
                         out += "<tr><td>" +
-                        "<a href=employeeEdit?action=U&id=" +arr[i].id+">"        
+                        "<a href=employeeUpdate?login=" +arr[i].id+">"        
                         +arr[i].name +
                         "</a></td><td>" +
                         arr[i].email +

@@ -152,7 +152,16 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
     @Override
     @Transactional
     public void updateRole(int userId, int roleId) throws Exception{
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        java.util.Date current = new java.util.Date();
+        Session session = null;
+        session = getSession();
+        System.out.println("roleId: "+roleId);
+        System.out.println("userId: "+userId);
+            
+        Query qry = session.createQuery("UPDATE sg.edu.ntu.hrms.dto.UserRoleDTO userRole SET userRole.role.id=:roleId WHERE userRole.user.id=:userId");
+        qry.setParameter("roleId", roleId);
+        qry.setParameter("userId", userId);
+        qry.executeUpdate();
     }
 
 }

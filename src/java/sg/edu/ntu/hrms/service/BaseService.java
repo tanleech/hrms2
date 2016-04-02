@@ -18,6 +18,8 @@ public class BaseService {
     
  @Autowired	
  SessionFactory sessionFactory;
+ 
+ 
 
     
 }

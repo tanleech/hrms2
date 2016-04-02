@@ -10,8 +10,6 @@
            uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.List" %>
 <%@ page import="sg.edu.ntu.hrms.dto.TitleDTO" %>
-<%@ taglib prefix="s" uri="/struts-tags"%>
-
 
 <!DOCTYPE html>
 <html>
@@ -77,7 +75,7 @@
        </script>
   </head>
     
-  <body class="hold-transition skin-blue sidebar-mini" >
+  <body class="hold-transition skin-blue sidebarmini" style="background-color: #3c8dbc" >
       <!-- header -->
       <%@include file="header.jsp"%>
       <!-- Left side column. contains the logo and sidebar -->
@@ -100,19 +98,14 @@
         <br/>
         <!-- Main content -->
                 <c:if test="${requestScope.action eq 'U'}">
-                     <form action="employeeEdit" method="post" id="myForm" class="form-horizontal">
+                     <form action="employeeUpdate" method="post" id="myForm" class="form-horizontal">
                 </c:if>
                 <c:if test="${requestScope.action ne 'U'}">
                      <form action="employeeAdd" method="post" id="myForm" class="form-horizontal">
                 </c:if>            
      <div class="box-body">
-         <c:if test="${param.action eq 'U'}">
-                    <input type="hidden" value="E" id="action" name="action"/>
-         </c:if>
-         <c:if test="${param.action ne 'U'}">
-                    <input type="hidden" value="A" id="action" name="action"/>
-         </c:if>
-                  <input type="hidden" value="${requestScope.user.id}" name="userId"/>
+         <input type="hidden" value="${requestScope.action}" id="action" name="action"/>
+                  <input type="hidden" value="${requestScope.user.id}" name="id"/>
                   
                        <c:if test="${not empty requestScope.error}">
                           <div class="alert alert-danger">

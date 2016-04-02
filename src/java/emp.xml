@@ -7,12 +7,12 @@
 <struts>
     <package name="actions" namespace="/" extends="struts-default">
         <action name="login" class="sg.edu.ntu.hrms.web.action.LoginAction">
-            <result name="success">/main.jsp</result>
-            <result name="error">/login.jsp</result>
-            <result name="input">/login.jsp</result>
+            <result name="success">main.jsp</result>
+            <result name="error">login.jsp</result>
+            <result name="input">login.jsp</result>
         </action>
         <action name="employee" class="sg.edu.ntu.hrms.web.action.EmployeeListAction">
-            <result name="input">/employeelist.jsp</result>
+            <result name="input">employeelist.jsp</result>
         </action>
         <action name="employeeJson" class="sg.edu.ntu.hrms.web.action.EmployeeListAction" method="json">
             <result type="stream">
@@ -21,13 +21,18 @@
             </result>
         </action>
         <action name="employeeEdit" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction">
-            <result name="success" type="redirectAction">/employee</result>
+            <result name="success" type="redirectAction">employee</result>
         </action>
         <action name="employeeAdd" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="addEmp">
-            <result name="input">/employeeEdit.jsp</result>
-            <result name="success" type="redirectAction">/employee</result>
+            <result name="input">employeeEdit.jsp</result>
+            <result name="error">employeeEdit.jsp</result>
+            <result name="success" type="redirectAction">employee</result>
         </action>
-        
+        <action name="employeeUpdate" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="updateEmp">
+            <result name="input">employeeEdit.jsp</result>
+            <result name="error">employeeEdit.jsp</result>
+            <result name="success" type="redirectAction">employee</result>
+        </action>
         
     </package>
 </struts>
