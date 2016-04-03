@@ -32,6 +32,28 @@
               <param name="actionName">leaveEnt</param>
             </result>
         </action>
+        <action name="leaveSettings" class="sg.edu.ntu.hrms.web.action.LeaveSettingsAction" method="list">
+            <result name="input">leaveSettings.jsp</result>
+        </action>
+        <action name="getAdd" class="sg.edu.ntu.hrms.web.action.LeaveSettingsAction" method="getAdd">
+            <result name="input">leaveSettingsEdit.jsp</result>
+        </action>
+        <action name="add" class="sg.edu.ntu.hrms.web.action.LeaveSettingsAction" method="add">
+            <result name="success" type="redirectAction">leaveSettings</result>
+            <result name="error">leaveSettingsEdit.jsp</result>
+        </action>
+        <action name="getUpdate" class="sg.edu.ntu.hrms.web.action.LeaveSettingsAction" method="getUpdate">
+            <result name="input">leaveSettingsEdit.jsp</result>
+        </action>
+        <action name="update" class="sg.edu.ntu.hrms.web.action.LeaveSettingsAction" method="update">
+            <result name="success" type="redirectAction">leaveSettings</result>
+            <result name="error">leaveSettingsEdit.jsp</result>
+        </action>
+        <action name="deleteSetting" class="sg.edu.ntu.hrms.web.action.LeaveSettingsAction" method="deleteSetting">
+            <result name="success" type="redirectAction">leaveSettings</result>
+        </action>
+        
+        
         
         
     </package>

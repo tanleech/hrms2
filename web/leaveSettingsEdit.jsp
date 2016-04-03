@@ -9,7 +9,6 @@
 <%@ taglib prefix="fmt" 
        uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.DeptDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -60,7 +59,12 @@
         </div>
         <br/>
         <!-- Main content -->
-                 <form action="leaveSettings" method="post" id="myForm" class="form-horizontal">
+                <c:if test="${param.action eq 'U'}">
+                 <form action="update" method="post" id="myForm" class="form-horizontal">
+                </c:if>
+                <c:if test="${param.action ne 'U'}">
+                 <form action="add" method="post" id="myForm" class="form-horizontal">
+                </c:if>    
                   <input type="hidden" value="${requestScope.leaveType.id}" id="id" name="id"/>
                   <input type="hidden" value="${param.action}" id="action" name="action"/>
                   <c:if test="${not empty requestScope.error}">
@@ -72,7 +76,7 @@
                     <div class="form-group">
                      <label class=" control-label col-sm-1">Leave Type:</label>
                      <div class="col-sm-3">
-                        <input type="text" class="form-control" name="leaveType"
+                        <input type="text" class="form-control" name="leaveTypeStr"
                                value="${requestScope.leaveType.description}"/>   
                      </div>
                      <label class=" control-label col-sm-2">Entitlement:</label>

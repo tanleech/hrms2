@@ -10,7 +10,7 @@
 <%@ taglib prefix="fmt" 
            uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.DeptDTO" %>
+<%@ page import="sg.edu.ntu.hrms.dto.LeaveTypeDTO" %>
 
 <!DOCTYPE html>
 <html>
@@ -21,7 +21,7 @@
          $(document).ready(function () {
              $('#addBtn').click(function ()
              {
-                  window.location.href="leaveSettingsEdit.jsp?action=A"; 
+                  window.location.href="getAdd?action=A"; 
              }
              );
              $('#leaveTab').DataTable({
@@ -59,20 +59,6 @@
                   <form action="deptEdit" method="post" id="myForm" class="form-horizontal">
                       <input type="hidden" value="" id="action" name="action"/>
                     <span class="content form-control" id="panel" style="height: 100%">
-                    <!--    
-                    <div class="form-group">
-                     <label class=" control-label col-sm-1">Yearly Increment</label>
-                     <div class="col-sm-3">
-                         <input type="text" class="form-control" name="name" 
-                                value="<c:out value='${requestScope.dept}'/>"/>
-                     </div>
-                     <label class=" control-label col-sm-2">Carry Over %</label>
-                     <div class="col-sm-3">
-                         <input type="text" class="form-control" name="name" 
-                                value="<c:out value='${requestScope.dept}'/>"/>
-                     </div>
-                    </div>
-                    -->
                 <table id="leaveTab" class="table table-bordered table-hover">
                     <thead>
                       <tr> 
@@ -88,7 +74,7 @@
                           <tr>   
                             <td width="40%">
                                 <fmt:formatNumber type="number" maxFractionDigits="5" value="${entry.id}" var="id"/>
-                                <a href ="leaveSettings?action=U&id=${id}" ><c:out value='${entry.description}'/></a>
+                                <a href ="getUpdate?action=U&id=${id}" ><c:out value='${entry.description}'/></a>
                             </td>
                             <td width="20%">
                                 <c:out value='${entry.days}'/>
@@ -102,7 +88,7 @@
                                     </c:if>
                             </td>
                             <td width="10%">
-                                 <a href="leaveSettings?action=D&id=${id}"><span class="glyphicon glyphicon-remove"/></a>                               
+                                 <a href="deleteSetting?action=D&id=${id}"><span class="glyphicon glyphicon-remove"/></a>                               
                             </td>
                           </tr> 
                         </c:forEach>
