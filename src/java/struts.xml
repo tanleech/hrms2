@@ -3,6 +3,7 @@
 "http://struts.apache.org/dtds/struts-2.0.dtd">
 
 <struts>
+    <constant name="struts.action.excludePattern" value="/uploadEmp"/>
     <include file="emp.xml"/>
     <include file="leave.xml"/>
       <include file="dept.xml"/>

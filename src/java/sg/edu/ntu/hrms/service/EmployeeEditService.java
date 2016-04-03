@@ -5,12 +5,19 @@
  */
 package sg.edu.ntu.hrms.service;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
+import org.apache.commons.fileupload.FileItem;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +56,130 @@ public class EmployeeEditService extends BaseService {
     private LeaveDAO leaveDAO;
     
     
-    
+    public void uploadEmp(List<FileItem> fields)throws Exception{
+        
+        Session session = sessionFactory.openSession();
+        Transaction txn = session.beginTransaction();
+        try
+        {
+            userDAO.setSession(session);
+            leaveDAO.setSession(session);
+            accessDAO.setSession(session);
+            deptDAO.setSession(session);
+            titleDAO.setSession(session);
+
+			Iterator<FileItem> it = fields.iterator();
+			while (it.hasNext()) {
+				FileItem fileItem = it.next();
+				//store in webserver.
+				String fileName = fileItem.getName();
+				if(fileName!=null)
+				{
+					File file = new File(fileName);
+					fileItem.write(file);
+					System.out.println("File successfully saved as " + file.getAbsolutePath());
+					
+					//process file
+					Reader in = new FileReader(file.getAbsolutePath());
+					Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
+					for (CSVRecord record : records) {
+					    String name = record.get("<name>");
+                                            System.out.println("name: "+name);
+					    String login = record.get("<login>");
+                                            String title = record.get("<title>");
+                                            String email = record.get("<email>");
+                                            String role  = record.get("<role>");
+                                            String dept  = record.get("<department>");
+                                            String joinDate = record.get("<joinDate>");
+                                            String probDate = record.get("<probDate>");
+                                            String annLeaveEnt = record.get("<leave_entitlement>");
+                                            String annBal = record.get("<leave_bal>");
+                                            String annMax = record.get("<leave_max>");
+                                            String annCF = record.get("<leave_cf>");
+                                            String med = record.get("<med_taken>");
+                                            String oil = record.get("<oil_taken>");
+                                            String unpaid = record.get("<unpaid_taken>");
+                                            String child = record.get("<child_bal>");
+                                            
+                                            TitleDTO titleDto = titleDAO.getTitleByName(title);
+                                            RoleDTO roleDto = accessDAO.getRole(role);
+                                            DeptDTO deptDto = deptDAO.getDepartment(dept);
+                                            //create the user first
+                                            UserDTO user = new UserDTO();
+                                            user.setName(name);
+                                            user.setLogin(login);
+                                            user.setTitle(titleDto);
+                                            user.setEmail(email);
+                                            user.setDateJoin(Utility.format(joinDate,"dd/MM/yyyy"));
+                                            user.setProbationDue(Utility.format(probDate, "dd/MM/yyyy"));
+                                            //store in user table.
+                                            userDAO.createUser(user);
+                                            //assign role
+                                            userDAO.assignRole(user, roleDto);
+                                            //assign dept
+                                            deptDAO.assignEmployee(user, deptDto);
+                                            
+                                            //leave ent
+                                            LeaveTypeDTO lvtypeDTO = leaveDAO.getLeaveType("Annual");
+                                            LeaveEntDTO  annualentDTO = new LeaveEntDTO();
+                                            annualentDTO.setCurrent(Double.parseDouble(annLeaveEnt));
+                                            annualentDTO.setBalance(Double.parseDouble(annBal));
+                                            annualentDTO.setMax(Double.parseDouble(annMax));
+                                            annualentDTO.setCarriedOver(Double.parseDouble(annCF));
+                                            annualentDTO.setLeaveType(lvtypeDTO);
+                                            //assign annual leave
+                                            annualentDTO.setUser(user);
+                                            leaveDAO.addLeaveEnt(annualentDTO);
+                                            //medical ent
+                                            LeaveTypeDTO medTypeDTO = leaveDAO.getLeaveType("Medical Leave");
+                                            LeaveEntDTO  medentDTO = new LeaveEntDTO();
+                                            medentDTO.setBalance(medTypeDTO.getDays()-Double.parseDouble(med));
+                                            medentDTO.setCurrent(medTypeDTO.getDays());
+                                            medentDTO.setUser(user);
+                                            medentDTO.setLeaveType(medTypeDTO);
+                                            leaveDAO.addLeaveEnt(medentDTO);
+                                            //oil ent
+                                            LeaveTypeDTO oilTypeDTO = leaveDAO.getLeaveType("Off-in-Lieu");
+                                            LeaveEntDTO  oilentDTO = new LeaveEntDTO();
+                                            oilentDTO.setBalance(oilTypeDTO.getDays()-Double.parseDouble(oil));
+                                            oilentDTO.setCurrent(0);
+                                            oilentDTO.setUser(user);
+                                            oilentDTO.setLeaveType(oilTypeDTO);
+                                            leaveDAO.addLeaveEnt(oilentDTO);
+                                            //unpaid
+                                            LeaveTypeDTO unpaidTypeDTO = leaveDAO.getLeaveType("Unpaid");
+                                            LeaveEntDTO  unpaidentDTO = new LeaveEntDTO();
+                                            unpaidentDTO.setBalance(unpaidTypeDTO.getDays()-Double.parseDouble(unpaid));
+                                            unpaidentDTO.setCurrent(0);
+                                            unpaidentDTO.setUser(user);
+                                            unpaidentDTO.setLeaveType(unpaidTypeDTO);
+                                            leaveDAO.addLeaveEnt(unpaidentDTO);
+                                            //child
+                                            LeaveTypeDTO childTypeDTO = leaveDAO.getLeaveType("Child Care");
+                                            double cur = childTypeDTO.getDays();
+                                            LeaveEntDTO  childentDTO = new LeaveEntDTO();
+                                            childentDTO.setBalance(cur-Double.parseDouble(child));
+                                            childentDTO.setCurrent(cur);
+                                            childentDTO.setUser(user);
+                                            childentDTO.setLeaveType(childTypeDTO);
+                                            leaveDAO.addLeaveEnt(childentDTO);
+                                            
+                                            //txn.commit();
+					}
+                                    
+
+				}
+                                
+                            
+			}
+                        txn.commit();
+        }catch(Exception ex){
+            txn.rollback();
+            ex.printStackTrace();
+        }finally{
+            session.close();
+        }
+    }
     public List<DeptDTO> getAllDepts()
     {
         List<DeptDTO> results = null;    

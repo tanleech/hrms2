@@ -81,9 +81,6 @@
         <action name="updateAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="updateAccess">
             <result name="success" type="redirectAction">roleList</result>
         </action>
-     
-
-        
 
     </package>
 </struts>
