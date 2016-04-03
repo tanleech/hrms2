@@ -34,6 +34,18 @@
             <result name="success" type="redirectAction">employee</result>
         </action>
         
+        <action name="titleList" class="sg.edu.ntu.hrms.web.action.TitleListAction">
+            <result name="success">titlelist.jsp</result>
+        </action>
+        <action name="getAddTitle" class="sg.edu.ntu.hrms.web.action.TitleAddAction" method="getAddTitle">
+            <result name="input">addTitle.jsp</result>
+        </action>
+        <action name="addTitle" class="sg.edu.ntu.hrms.web.action.TitleAddAction" method="addTitle">
+            <result name="success" type="redirectAction">titleList</result>
+            <result name="error">addTitle.jsp</result>
+        </action>
+        
+
     </package>
 </struts>
 
