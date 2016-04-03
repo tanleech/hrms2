@@ -19,7 +19,7 @@
          $(document).ready(function () {
              $('#Apply').click(function ()
              {
-                window.location.href="leaveTxn"; 
+                window.location.href="getLeaveForm"; 
              }      
              );
              $('#leaveTab').DataTable({
@@ -109,9 +109,9 @@
                                  entry.status.description ne 'rejected')}">
                             <td width="20%">
                                 <c:if test="${sessionScope.User.id ne entry.user.id}">
-                                    <a href="leaveTxnApprove?action=APPRV&txn=${entry.id}&userId=${entry.user.id}">Approve</a>
+                                    <a href="approveLeave?action=APPRV&txn=${entry.id}&userId=${entry.user.id}">Approve</a>
                                     |
-                                    <a href="leaveTxnApprove?action=REJ&txn=${entry.id}&typeId=${entry.leaveType.id}&userId=${entry.user.id}&days=${entry.days}">Reject</a>
+                                    <a href="approveLeave?action=REJ&txn=${entry.id}&typeId=${entry.leaveType.id}&userId=${entry.user.id}&days=${entry.days}">Reject</a>
                                 </c:if> 
                             </td>
                            </c:if> 

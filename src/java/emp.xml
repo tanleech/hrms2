@@ -6,13 +6,25 @@
 
 <struts>
     <package name="actions" namespace="/" extends="struts-default">
+        <interceptors>
+                <interceptor class="sg.edu.ntu.hrms.web.action.AuthInterceptor" name="authInterceptor">
+                </interceptor>
+                <interceptor-stack name="authStack">
+                        <interceptor-ref name="authInterceptor" />
+                        <interceptor-ref name="defaultStack" />
+                </interceptor-stack>
+        </interceptors>        
         <action name="login" class="sg.edu.ntu.hrms.web.action.LoginAction">
             <result name="success">main.jsp</result>
             <result name="error">login.jsp</result>
             <result name="input">login.jsp</result>
+
         </action>
         <action name="employee" class="sg.edu.ntu.hrms.web.action.EmployeeListAction">
+            <interceptor-ref name="authStack"/>
             <result name="input">employeelist.jsp</result>
+            <result name="login">login.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
         </action>
         <action name="employeeJson" class="sg.edu.ntu.hrms.web.action.EmployeeListAction" method="json">
             <result type="stream">
@@ -21,17 +33,24 @@
             </result>
         </action>
         <action name="employeeEdit" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction">
+            <interceptor-ref name="authStack"/>
             <result name="success" type="redirectAction">employee</result>
+            <result name="noaccess">noAccess.jsp</result>
         </action>
         <action name="employeeAdd" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="addEmp">
+            <interceptor-ref name="authStack"/>
             <result name="input">employeeEdit.jsp</result>
             <result name="error">employeeEdit.jsp</result>
             <result name="success" type="redirectAction">employee</result>
+            <result name="noaccess">noAccess.jsp</result>
+            
         </action>
         <action name="employeeUpdate" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="updateEmp">
+            <interceptor-ref name="authStack"/>
             <result name="input">employeeEdit.jsp</result>
             <result name="error">employeeEdit.jsp</result>
             <result name="success" type="redirectAction">employee</result>
+            <result name="noaccess">noAccess.jsp</result>
         </action>
         
         <action name="titleList" class="sg.edu.ntu.hrms.web.action.TitleListAction">

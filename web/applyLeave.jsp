@@ -66,7 +66,7 @@
              {
                 var type = $('#leaveType').val();
                 //alert('type: '+type);
-                $.get("leaveTxn?action=Q&typeId="+type, function(data, status){
+                $.get("getLeaveBalance?action=Q&typeId="+type, function(data, status){
                         //alert("Data: " + data + "\nStatus: " + status);
                         //alert(data);
                         $('#balance').val(data);
@@ -75,14 +75,18 @@
              }
              );
              $('#startDate').datepicker(
+                     /*
                      {  
                        format: "dd/mm/yyyy"
                      }
+                     */
              );
              $('#endDate').datepicker(
+                    /* 
                      {  
                        format: "dd/mm/yyyy"
-                     }                     
+                     } 
+                     */
                 );
      
             }
@@ -108,7 +112,7 @@
         <br/>
         <!-- Main content -->
                <div class="box-body">
-                  <form action="leaveTxnAdd" method="post" id="myForm" class="form-horizontal">
+                  <form action="applyLeave" method="post" id="myForm" class="form-horizontal">
                     <input type="hidden" value="" id="action" name="action"/>
                     <input type="hidden" value="${requestScope.user.login}" id="login" name="login" />
                     <span class="content form-control" id="panel" style="height: 100%">
