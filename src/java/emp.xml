@@ -44,6 +44,26 @@
             <result name="success" type="redirectAction">titleList</result>
             <result name="error">addTitle.jsp</result>
         </action>
+        <action name="roleList" class="sg.edu.ntu.hrms.web.action.AccessAction" method="getAllRoles">
+            <result name="success">rolelist.jsp</result>
+        </action>
+        
+        <action name="getAddAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="getAddAccess">
+            <result name="input">roleEdit.jsp</result>
+        </action>
+
+        <action name="addAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="addAccess">
+            <result name="error">roleEdit.jsp</result>
+            <result name="success" type="redirectAction">roleList</result>
+        </action>
+         <action name="getUpdateAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="getUpdateAccess">
+            <result name="input">roleEdit.jsp</result>
+        </action>
+        <action name="updateAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="updateAccess">
+            <result name="success" type="redirectAction">roleList</result>
+        </action>
+     
+
         
 
     </package>

@@ -8,7 +8,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="java.util.List" %>
-<%@ page import="com.sapuraglobal.hrms.dto.RoleDTO" %>
+<%@ page import="sg.edu.ntu.hrms.dto.RoleDTO" %>
 
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
          $(document).ready(function () {
              $('#Add').click(function ()
              {
-                window.location.href="roleEdit"; 
+                window.location.href="getAddAccess"; 
              }      
              );
              $('#roleTab').DataTable({
@@ -72,7 +72,7 @@
                                     <c:forEach var="entry" items="${requestScope.roleList}">
                                         <tr>
                                             <td>
-                                                <a href='<c:out value="roleEdit?role=${entry.description}&action=U"/>'><c:out value="${entry.description}"/> </a>                                               
+                                                <a href='<c:out value="getUpdateAccess?role=${entry.description}&action=U"/>'><c:out value="${entry.description}"/> </a>                                               
                                             </td>
                                             <td>
                                                 <c:out value="${fn:length(entry.userRoleList)}"/>                                                
