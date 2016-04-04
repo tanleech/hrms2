@@ -8,6 +8,8 @@ package sg.edu.ntu.hrms.web.action;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import sg.edu.ntu.hrms.dto.DeptDTO;
 import sg.edu.ntu.hrms.dto.LeaveEntDTO;
 import sg.edu.ntu.hrms.dto.RoleDTO;
@@ -15,13 +17,14 @@ import sg.edu.ntu.hrms.dto.TitleDTO;
 import sg.edu.ntu.hrms.dto.UserDTO;
 import sg.edu.ntu.hrms.dto.UserDeptDTO;
 import sg.edu.ntu.hrms.dto.UserRoleDTO;
+import sg.edu.ntu.hrms.service.AuditLogService;
 import sg.edu.ntu.hrms.service.EmployeeEditService;
 
 /**
  *
  * @author michael-PC
  */
-public class EmployeeEditAction extends BaseAction{
+public class EmployeeEditAction extends BaseAction implements ServletRequestAware{
     
     private String name;
     private String email;
@@ -55,6 +58,18 @@ public class EmployeeEditAction extends BaseAction{
     private String password;
     
     private EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
+    private AuditLogService logSvc = (AuditLogService)ctx.getBean(AuditLogService.class);
+    private HttpServletRequest request;
+    
+       public HttpServletRequest getRequest() {
+        return request;
+    }
+
+   @Override
+   public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
+
 
     public String getPassword() {
         return password;
@@ -280,6 +295,9 @@ public class EmployeeEditAction extends BaseAction{
             try
             {
                 svc.addEmployee(emp);
+                //audit log
+                UserDTO author = (UserDTO)request.getSession().getAttribute("User");
+                logSvc.createLogRecord("Create Employee record: "+emp.getLogin(), author);
                 result = SUCCESS;
 
             }catch (Exception ex)
