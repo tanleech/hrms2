@@ -341,6 +341,9 @@ public class EmployeeEditAction extends BaseAction implements ServletRequestAwar
             //EmployeeEditService svc = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
             emp.setId(Integer.parseInt(id));
             svc.updateEmployee(emp);
+            //audit log
+            UserDTO author = (UserDTO)request.getSession().getAttribute("User");
+            logSvc.createLogRecord("Update Employee record: "+emp.getLogin(), author);
             result = SUCCESS;
         }
         

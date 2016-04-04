@@ -2,6 +2,7 @@ package sg.edu.ntu.hrms.web.action;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.http.HttpSession;
 import org.apache.struts2.interceptor.SessionAware;
 import sg.edu.ntu.hrms.dto.UserDTO;
 import sg.edu.ntu.hrms.service.LoginService;
@@ -70,6 +71,13 @@ public class LoginAction extends BaseAction implements SessionAware{
                    return SUCCESS;
              }
            }
+        }
+        
+        public String logout(){
+            //invalidate the session
+            sessionMap.clear();
+            
+            return SUCCESS;
         }
 
     @Override

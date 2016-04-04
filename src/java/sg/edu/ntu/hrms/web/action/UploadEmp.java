@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package sg.edu.ntu.hrms.servlet;
+package sg.edu.ntu.hrms.web.action;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
@@ -20,6 +22,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
+import sg.edu.ntu.hrms.dto.AccessDTO;
 import sg.edu.ntu.hrms.service.EmployeeEditService;
 
 /**
@@ -57,9 +60,25 @@ public class UploadEmp extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        boolean hasAccess = false;
         response.setContentType("text/html;charset=UTF-8");
         String action = request.getParameter("action");
         System.out.println("action: "+action);
+        HttpSession session = request.getSession();
+        HashMap accessTab = (HashMap)session.getAttribute("access");
+        AccessDTO access =(AccessDTO)accessTab.get("System Log");
+        if(access.getAccess()>=1)
+            {
+                hasAccess=true;
+            }
+        if(!hasAccess)
+        {
+             RequestDispatcher dispatcher = request.getRequestDispatcher("/noAccess.jsp");
+   	     dispatcher.forward(request, response);
+        }
+        else
+        {
         if(action==null || action.isEmpty())
         {
                 FileItemFactory factory = new DiskFileItemFactory();
@@ -193,6 +212,7 @@ public class UploadEmp extends HttpServlet {
 			//request.setAttribute(Constants.TITLE, "Home");
 			dispatcher.forward(request, response);
             
+        }
         }
     }
 
