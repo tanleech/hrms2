@@ -66,8 +66,8 @@
                      <label class=" control-label col-sm-1">Name</label>
                      <div class="col-sm-3" id="nameContainer">
                         <input type="hidden" value="" name="action" id="action"/> 
-                        <input type="hidden" value="${param.dept}" name="oldName" id="oldName"/> 
-                        <input type="text" class="form-control" name="dept" id="name" value="${param.dept}"/>   
+                        <input type="hidden" value="${requestScope.dept}" name="oldName" id="oldName"/> 
+                        <input type="text" class="form-control" name="dept" id="name" value="${requestScope.dept}"/>   
                      </div>
                     </div>
                   </span> 

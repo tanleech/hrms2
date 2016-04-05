@@ -160,6 +160,11 @@ public class DeptAction extends BaseAction {
 
     }
     
+    public String getUpdateDept(){
+        
+        return INPUT;
+    }
+    
     public String assignMgr()throws Exception
     {
         System.out.println("mgr: "+manager);

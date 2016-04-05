@@ -145,7 +145,17 @@
                         </select>
                      </div>
                 </c:if>
-                <c:if test="${entry.module.name != 'Upload'}">
+                <c:if test="${entry.module.name == 'System Log'}">
+                     <label class=" control-label col-sm-2">System Log</label>
+                     <div class="col-sm-3">
+                        <select class="form-control" id="email" name="${entry.module.name}">
+                           <option value="0" ${entry.access == 0 ? 'selected' : ''}>No</option>
+                           <option value="1" ${entry.access == 1 ? 'selected' : ''}>Yes</option>
+                        </select>
+                     </div>
+                </c:if>
+                     
+                <c:if test="${(entry.module.name != 'Upload')&&(entry.module.name != 'System Log')}">
                      <c:if test="${entry.module.name != 'Leave'}">
                      
                        <label class=" control-label col-sm-2"><c:out value="${entry.module.name}"/></label>

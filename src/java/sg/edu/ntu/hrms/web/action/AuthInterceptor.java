@@ -85,7 +85,7 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
             
         }
-        else if (module.equals("deptList"))
+        else if (module.startsWith("deptList"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Department");
             if(access.getAccess()>=1)
@@ -93,7 +93,11 @@ public class AuthInterceptor extends AbstractInterceptor{
                 hasAccess=true;
             }
         }
-        else if (module.equals("deptEdit")||module.equals("addDept"))
+        else if (module.startsWith("deptEdit")||module.startsWith("addDept")
+                ||module.startsWith("assignMgr")||module.startsWith("getAssignEmp")
+                ||module.startsWith("deptAssignEmp")||module.startsWith("UnAssignEmp")
+                ||module.startsWith("getUpdateDept")||module.startsWith("updateDept")
+                )
         {
             AccessDTO access =(AccessDTO)accessTab.get("Department");
             if(access.getAccess()==2)
@@ -102,7 +106,7 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
             
         }
-        else if (module.equals("roleList"))
+        else if (module.startsWith("roleList"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("User Roles");
             if(access.getAccess()>=1)
@@ -111,7 +115,8 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
             
         }
-        else if (module.equals("roleEdit")||module.equals("addRole"))
+        else if (module.startsWith("getAddAccess")||module.startsWith("addAccess")
+                ||module.startsWith("getUpdateAccess")||module.startsWith("updateAccess"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("User Roles");
             if(access.getAccess()==2)
@@ -120,7 +125,7 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
             
         }
-        else if (module.equals("titleList"))
+        else if (module.startsWith("titleList"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Job Title");
             if(access.getAccess()>=1)
@@ -128,7 +133,7 @@ public class AuthInterceptor extends AbstractInterceptor{
                 hasAccess=true;
             }
         }
-        else if (module.equals("addTitle"))
+        else if (module.startsWith("addTitle")||module.startsWith("getAddTitle"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Job Title");
             if(access.getAccess()==2)
@@ -137,7 +142,7 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
             
         }
-        else if (module.equals("leaveSettings"))
+        else if (module.startsWith("leaveSettings"))
         {
            AccessDTO access =(AccessDTO)accessTab.get("Leave Setting");
            if(action==null&&access.getAccess()>=1)
@@ -175,7 +180,7 @@ public class AuthInterceptor extends AbstractInterceptor{
                 hasAccess=true;
             }
         }    
-        else if(module.equals("leaveTxn"))
+        else if(module.startsWith("leaveTxn"))
         {
            AccessDTO access =(AccessDTO)accessTab.get("Leave");
            if(action!=null)
@@ -197,7 +202,7 @@ public class AuthInterceptor extends AbstractInterceptor{
                  }
            }
         }
-        else if(module.equals("leaveTxnAdd"))
+        else if(module.startsWith("leaveTxnAdd"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Leave");
             if(access.getAccess()>=1)
@@ -206,7 +211,7 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
 
         }
-        else if(module.equals("leaveTxnApprove"))
+        else if(module.startsWith("leaveTxnApprove"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Leave");
             if(access.getAccess()>=1 && isManager)
@@ -215,15 +220,16 @@ public class AuthInterceptor extends AbstractInterceptor{
             }
 
         }
-        else if(module.equals("uploadEmp"))
+        else if(module.startsWith("getAuditLog")||module.startsWith("auditList"))
         {
-            AccessDTO access =(AccessDTO)accessTab.get("Upload");
+            AccessDTO access =(AccessDTO)accessTab.get("System Log");
             if(access.getAccess()>=1 )
             {
                      hasAccess=true;
             }
             
         }
+        
         
             
         return hasAccess;

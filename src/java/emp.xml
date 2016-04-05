@@ -38,6 +38,7 @@
         <action name="employeeEdit" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction">
             <interceptor-ref name="authStack"/>
             <result name="success" type="redirectAction">employee</result>
+            <result name="login">login.jsp</result>
             <result name="noaccess">noAccess.jsp</result>
         </action>
         <action name="employeeAdd" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="addEmp">
@@ -46,6 +47,7 @@
             <result name="error">employeeEdit.jsp</result>
             <result name="success" type="redirectAction">employee</result>
             <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
             
         </action>
         <action name="employeeUpdate" class="sg.edu.ntu.hrms.web.action.EmployeeEditAction" method="updateEmp">
@@ -54,38 +56,75 @@
             <result name="error">employeeEdit.jsp</result>
             <result name="success" type="redirectAction">employee</result>
             <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         
         <action name="titleList" class="sg.edu.ntu.hrms.web.action.TitleListAction">
+            <interceptor-ref name="authStack"/>
             <result name="success">titlelist.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="getAddTitle" class="sg.edu.ntu.hrms.web.action.TitleAddAction" method="getAddTitle">
+            <interceptor-ref name="authStack"/>
             <result name="input">addTitle.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="addTitle" class="sg.edu.ntu.hrms.web.action.TitleAddAction" method="addTitle">
+            <interceptor-ref name="authStack"/>
             <result name="success" type="redirectAction">titleList</result>
             <result name="error">addTitle.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="roleList" class="sg.edu.ntu.hrms.web.action.AccessAction" method="getAllRoles">
+            <interceptor-ref name="authStack"/>
             <result name="success">rolelist.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         
         <action name="getAddAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="getAddAccess">
+            <interceptor-ref name="authStack"/>
             <result name="input">roleEdit.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
         </action>
 
         <action name="addAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="addAccess">
+            <interceptor-ref name="authStack"/>
             <result name="error">roleEdit.jsp</result>
             <result name="success" type="redirectAction">roleList</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
          <action name="getUpdateAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="getUpdateAccess">
+            <interceptor-ref name="authStack"/>
             <result name="input">roleEdit.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="updateAccess" class="sg.edu.ntu.hrms.web.action.AccessAction" method="updateAccess">
+            <interceptor-ref name="authStack"/>
             <result name="success" type="redirectAction">roleList</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
          <action name="getAuditLog" class="sg.edu.ntu.hrms.web.action.AuditLogAction">
+            <interceptor-ref name="authStack"/>
             <result name="input">auditLogList.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         
         <action name="auditList" class="sg.edu.ntu.hrms.web.action.AuditLogAction" method="json">

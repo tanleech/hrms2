@@ -21,6 +21,7 @@
               <hr width="90%"/>
               <li><a href="roleList" id="cat"><span><strong>User Roles</strong></span></a></li>
               <li><a href="uploadEmp?action=A" id="cat"><span><strong>Upload</strong></span></a></li>
+              <li><a href="getAuditLog" id="cat"><span><strong>System Log</strong></span></a></li>
               
           </ul>
         </section>

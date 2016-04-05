@@ -6,11 +6,28 @@
 
 <struts>
     <package name="deptActions" namespace="/" extends="struts-default">
+        <interceptors>
+                <interceptor class="sg.edu.ntu.hrms.web.action.AuthInterceptor" name="authInterceptor">
+                </interceptor>
+                <interceptor-stack name="authStack">
+                        <interceptor-ref name="authInterceptor" />
+                        <interceptor-ref name="defaultStack" />
+                </interceptor-stack>
+        </interceptors>           
         <action name="deptList" class="sg.edu.ntu.hrms.web.action.DeptAction" method="deptList">
+            <interceptor-ref name="authStack"/>           
             <result name="success">deptlist.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
+            
         </action>
         <action name="deptEdit" class="sg.edu.ntu.hrms.web.action.DeptAction" method="deptEdit">
+            <interceptor-ref name="authStack"/>             
             <result name="success">deptEdit.jsp</result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="assignMgr" class="sg.edu.ntu.hrms.web.action.DeptAction" method="assignMgr">
             <result type="stream">
@@ -19,54 +36,77 @@
             </result>
         </action>
         <action name="getAssignEmp" class="sg.edu.ntu.hrms.web.action.DeptAction" method="getAssignEmp">
+            <interceptor-ref name="authStack"/>             
             <result name="input">
                 deptAddEmp.jsp
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="deptAssignEmp" class="sg.edu.ntu.hrms.web.action.DeptAction" method="assignEmp">
+            <interceptor-ref name="authStack"/>             
             <result name="error">deptAddEmp.jsp</result>
             <result name="success" type="redirectAction">
               <param name="dept">${dept}</param>
               <param name="actionName">deptEdit</param>
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="UnAssignEmp" class="sg.edu.ntu.hrms.web.action.DeptAction" method="unassignEmp">
+            <interceptor-ref name="authStack"/>             
             <result name="success" type="redirectAction">
               <param name="dept">${dept}</param>
               <param name="actionName">deptEdit</param>
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="getAddDept" class="sg.edu.ntu.hrms.web.action.DeptAction" method="getAddDept">
+            <interceptor-ref name="authStack"/>             
             <result name="input">
                 addDept.jsp
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
             
         </action>
         <action name="addDept" class="sg.edu.ntu.hrms.web.action.DeptAction" method="addDept">
+            <interceptor-ref name="authStack"/>             
             <result name="success" type="redirectAction">
                 deptList
             </result>
             <result name="error">
                 addDept.jsp
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
         <action name="getUpdateDept" class="sg.edu.ntu.hrms.web.action.DeptAction" method="getUpdateDept">
+            <interceptor-ref name="authStack"/>             
             <result name="input">
                 editDeptName.jsp
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>        
         <action name="updateDept" class="sg.edu.ntu.hrms.web.action.DeptAction" method="updateDept">
+            <interceptor-ref name="authStack"/>             
             <result name="success" type="redirectAction">
                 deptList
             </result>
             <result name="error">
                 editDeptName.jsp
             </result>
+            <result name="noaccess">noAccess.jsp</result>
+            <result name="login">login.jsp</result>
+            
         </action>
-
-        
-        
-        
     </package>
 </struts>
 

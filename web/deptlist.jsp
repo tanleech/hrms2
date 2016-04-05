@@ -73,7 +73,7 @@
                                     <c:forEach var="entry" items="${requestScope.deptList}">
                                         <tr>
                                             <td>
-                                                <a href='editDeptName.jsp?dept=${entry.description}'><c:out value="${entry.description}"/> </a>                                               
+                                                <a href='getUpdateDept?dept=${entry.description}'><c:out value="${entry.description}"/> </a>                                               
                                             </td>
                                             <td>
                                               <c:forEach var="userDept" items="${entry.employees}">
