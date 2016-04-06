@@ -9,9 +9,12 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts2.interceptor.ServletRequestAware;
 import sg.edu.ntu.hrms.dto.DeptDTO;
 import sg.edu.ntu.hrms.dto.UserDTO;
 import sg.edu.ntu.hrms.dto.UserDeptDTO;
+import sg.edu.ntu.hrms.service.AuditLogService;
 import sg.edu.ntu.hrms.service.DeptService;
 import sg.edu.ntu.hrms.service.EmployeeEditService;
 
@@ -19,7 +22,7 @@ import sg.edu.ntu.hrms.service.EmployeeEditService;
  *
  * @author michael-PC
  */
-public class DeptAction extends BaseAction {
+public class DeptAction extends BaseAction implements ServletRequestAware{
     
     private List<DeptDTO>deptList;
     private String dept;
@@ -33,7 +36,17 @@ public class DeptAction extends BaseAction {
     private String userId;
     private String action;
     private String oldName;
+    private HttpServletRequest request;
+        private AuditLogService logSvc = (AuditLogService)ctx.getBean(AuditLogService.class);
 
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    @Override
+    public void setServletRequest(HttpServletRequest request) {
+        this.request = request;
+    }
     public String getOldName() {
         return oldName;
     }
@@ -171,6 +184,7 @@ public class DeptAction extends BaseAction {
         String jsonStr="";
         deptSvc.assignMgr(manager, dept);
         inputStream = new ByteArrayInputStream(jsonStr.getBytes("UTF-8"));
+        
         return SUCCESS;
        
     }
@@ -185,6 +199,10 @@ public class DeptAction extends BaseAction {
     {
         try{
           deptSvc.assignEmp(empLogin, dept);
+          //audit log
+          UserDTO author = (UserDTO)request.getSession().getAttribute("User");
+          logSvc.createLogRecord("Assign Employee : "+empLogin+" to dept: "+dept, author);
+
         }catch(Exception ex){
             error = ex.getMessage();
             usrList = svc.getAllUsers();
@@ -201,6 +219,9 @@ public class DeptAction extends BaseAction {
         page = "/deptEdit?action=U&dept="+dept;                    
         */
         deptSvc.unassignEmp(userId, dept);
+        //audit log
+        UserDTO author = (UserDTO)request.getSession().getAttribute("User");
+        logSvc.createLogRecord("Unassign  from"+dept, author);         
         return SUCCESS;
     }
     public String getAddDept()
@@ -211,6 +232,9 @@ public class DeptAction extends BaseAction {
     {
         try{
          deptSvc.addDept(dept);
+          //audit log
+          UserDTO author = (UserDTO)request.getSession().getAttribute("User");
+          logSvc.createLogRecord("Add Dept : "+dept, author);         
         }catch(Exception ex){
             ex.printStackTrace();
             error = ex.getMessage();
@@ -223,6 +247,10 @@ public class DeptAction extends BaseAction {
     {
         try{
          deptSvc.updateDept(oldName,dept);
+          //audit log
+          UserDTO author = (UserDTO)request.getSession().getAttribute("User");
+          logSvc.createLogRecord("Update Dept : "+dept, author);         
+         
         }catch(Exception ex){
             ex.printStackTrace();
             error = ex.getMessage();

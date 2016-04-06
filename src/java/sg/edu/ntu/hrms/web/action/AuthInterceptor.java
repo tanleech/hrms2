@@ -202,7 +202,7 @@ public class AuthInterceptor extends AbstractInterceptor{
                  }
            }
         }
-        else if(module.startsWith("leaveTxnAdd"))
+        else if(module.startsWith("leaveTxnAdd")||module.startsWith("getLeaveForm"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Leave");
             if(access.getAccess()>=1)
