@@ -41,7 +41,8 @@ public class AppConfig {
 	      //BasicDataSource dataSource = new BasicDataSource();
               final JndiDataSourceLookup dsLookup = new JndiDataSourceLookup();
               dsLookup.setResourceRef(true);
-              DataSource dataSource = dsLookup.getDataSource("jdbc/CI6225");
+              //DataSource dataSource = dsLookup.getDataSource("jdbc/CI6225");
+              DataSource dataSource = dsLookup.getDataSource(env.getProperty("jdbc.jndi"));
               return dataSource;              
               //jndi.afterPropertiesSet();
               /*
