@@ -91,119 +91,20 @@ public class UploadEmp extends HttpServlet {
 			List<FileItem> fields = upload.parseRequest(request);
                         EmployeeEditService svc  = (EmployeeEditService)ctx.getBean(EmployeeEditService.class);
                         svc.uploadEmp(fields);
-                        /*
-			Iterator<FileItem> it = fields.iterator();
-			while (it.hasNext()) {
-				FileItem fileItem = it.next();
-				//store in webserver.
-				String fileName = fileItem.getName();
-				if(fileName!=null)
-				{
-					File file = new File(fileName);
-					fileItem.write(file);
-					System.out.println("File successfully saved as " + file.getAbsolutePath());
-					
-					//process file
-					Reader in = new FileReader(file.getAbsolutePath());
-					Iterable<CSVRecord> records = CSVFormat.EXCEL.withHeader().parse(in);
-					for (CSVRecord record : records) {
-					    String name = record.get("<name>");
-					    String login = record.get("<login>");
-                                            String title = record.get("<title>");
-                                            String email = record.get("<email>");
-                                            String role  = record.get("<role>");
-                                            String dept  = record.get("<department>");
-                                            String joinDate = record.get("<joinDate>");
-                                            String probDate = record.get("<probDate>");
-                                            String annLeaveEnt = record.get("<leave_entitlement>");
-                                            String annBal = record.get("<leave_bal>");
-                                            String annMax = record.get("<leave_max>");
-                                            String annCF = record.get("<leave_cf>");
-                                            String med = record.get("<med_taken>");
-                                            String oil = record.get("<oil_taken>");
-                                            String unpaid = record.get("<unpaid_taken>");
-                                            String child = record.get("<child_bal>");
-                                            
-                                            TitleDTO titleDto = titleBean.getTitleByName(title);
-                                            RoleDTO roleDto = accessBean.getRole(role);
-                                            DeptDTO deptDto = deptBean.getDepartment(dept);
-                                            //create the user first
-                                            UserDTO user = new UserDTO();
-                                            user.setName(name);
-                                            user.setLogin(login);
-                                            user.setTitle(titleDto);
-                                            user.setEmail(email);
-                                            user.setDateJoin(Utility.format(joinDate,"dd/MM/yyyy"));
-                                            user.setProbationDue(Utility.format(probDate, "dd/MM/yyyy"));
-                                            //store in user table.
-                                            userBean.createUser(user);
-                                            //assign role
-                                            userBean.assignRole(user, roleDto);
-                                            //assign dept
-                                            deptBean.assignEmployee(user, deptDto);
-                                            
-                                            //leave ent
-                                            LeaveTypeDTO lvtypeDTO = leaveBean.getLeaveType("Annual");
-                                            LeaveEntDTO  annualentDTO = new LeaveEntDTO();
-                                            annualentDTO.setCurrent(Double.parseDouble(annLeaveEnt));
-                                            annualentDTO.setBalance(Double.parseDouble(annBal));
-                                            annualentDTO.setMax(Double.parseDouble(annMax));
-                                            annualentDTO.setCarriedOver(Double.parseDouble(annCF));
-                                            annualentDTO.setLeaveType(lvtypeDTO);
-                                            //assign annual leave
-                                            annualentDTO.setUser(user);
-                                            leaveBean.addLeaveEnt(annualentDTO);
-                                            //medical ent
-                                            LeaveTypeDTO medTypeDTO = leaveBean.getLeaveType("Medical Leave");
-                                            LeaveEntDTO  medentDTO = new LeaveEntDTO();
-                                            medentDTO.setBalance(medTypeDTO.getDays()-Double.parseDouble(med));
-                                            medentDTO.setCurrent(medTypeDTO.getDays());
-                                            medentDTO.setUser(user);
-                                            medentDTO.setLeaveType(medTypeDTO);
-                                            leaveBean.addLeaveEnt(medentDTO);
-                                            //oil ent
-                                            LeaveTypeDTO oilTypeDTO = leaveBean.getLeaveType("Off-in-Lieu");
-                                            LeaveEntDTO  oilentDTO = new LeaveEntDTO();
-                                            oilentDTO.setBalance(oilTypeDTO.getDays()-Double.parseDouble(oil));
-                                            oilentDTO.setCurrent(0);
-                                            oilentDTO.setUser(user);
-                                            oilentDTO.setLeaveType(oilTypeDTO);
-                                            leaveBean.addLeaveEnt(oilentDTO);
-                                            //unpaid
-                                            LeaveTypeDTO unpaidTypeDTO = leaveBean.getLeaveType("Unpaid");
-                                            LeaveEntDTO  unpaidentDTO = new LeaveEntDTO();
-                                            unpaidentDTO.setBalance(unpaidTypeDTO.getDays()-Double.parseDouble(unpaid));
-                                            unpaidentDTO.setCurrent(0);
-                                            unpaidentDTO.setUser(user);
-                                            unpaidentDTO.setLeaveType(unpaidTypeDTO);
-                                            leaveBean.addLeaveEnt(unpaidentDTO);
-                                            //child
-                                            LeaveTypeDTO childTypeDTO = leaveBean.getLeaveType("Child Care");
-                                            double cur = childTypeDTO.getDays();
-                                            LeaveEntDTO  childentDTO = new LeaveEntDTO();
-                                            childentDTO.setBalance(cur-Double.parseDouble(child));
-                                            childentDTO.setCurrent(cur);
-                                            childentDTO.setUser(user);
-                                            childentDTO.setLeaveType(childTypeDTO);
-                                            leaveBean.addLeaveEnt(childentDTO);
-                                            
-                                            
-					}
-
-
-				}
-			}
-                      */
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		finally
 		{
 			
-			//priceDAO.CloseConnection();
+                        //System.out.println("redirect to employee");
+                        response.sendRedirect("employee.action");
+                        /*
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/employee");
 			//request.setAttribute(Constants.TITLE, "Home");
 			dispatcher.forward(request, response);
+                        */
+                        
 		}
         }
         else

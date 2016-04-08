@@ -202,7 +202,8 @@ public class AuthInterceptor extends AbstractInterceptor{
                  }
            }
         }
-        else if(module.startsWith("leaveTxnAdd")||module.startsWith("getLeaveForm"))
+        else if(module.startsWith("leaveTxnAdd")||module.startsWith("getLeaveForm")
+                ||module.startsWith("applyLeave")||module.startsWith("approveLeave"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("Leave");
             if(access.getAccess()>=1)
@@ -223,6 +224,15 @@ public class AuthInterceptor extends AbstractInterceptor{
         else if(module.startsWith("getAuditLog")||module.startsWith("auditList"))
         {
             AccessDTO access =(AccessDTO)accessTab.get("System Log");
+            if(access.getAccess()>=1 )
+            {
+                     hasAccess=true;
+            }
+            
+        }
+        else if (module.startsWith("uploadEmp"))
+        {
+            AccessDTO access =(AccessDTO)accessTab.get("Upload");
             if(access.getAccess()>=1 )
             {
                      hasAccess=true;
