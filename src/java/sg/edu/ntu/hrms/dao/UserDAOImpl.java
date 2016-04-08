@@ -137,6 +137,7 @@ public class UserDAOImpl extends BaseDAOImpl implements UserDAO {
         user.setTitle(userDTO.getTitle());
         user.setModified(current);
         user.setApprover(userDTO.getApprover());
+        user.setPassword(userDTO.getPassword());
         session.saveOrUpdate(user);
         /*
             //audit log

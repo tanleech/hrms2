@@ -361,6 +361,7 @@ public class EmployeeEditAction extends BaseAction implements ServletRequestAwar
         user.setOffice(office);
         user.setLogin(login);
         user.setPassword(password);
+        //System.out.println("password: "+password);
         /*
         user.setMax(Double.parseDouble(max));
         user.setBase(Double.parseDouble(base));
